@@ -9,10 +9,12 @@ $(document).ready(function() {
 
   $('.vote-box').on('click', function() {
     $('.vote-box').removeClass('selected');
+    csrf = $("input[name=nameGoesHere]").val();
     color = $( this ).data('color');
     url = '/vote/color/' + color,
     console.log(url)
     $( this ).addClass('selected');
+    xhr.setRequestHeader("X-CSRFToken", csrf);
     $.post(url, function() {
       console.log('Voted ' + color);
     });

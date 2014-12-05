@@ -27,6 +27,7 @@ var connectAssets = require('connect-assets');
 
 var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
+var voteController = require('./controllers/vote');
 var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 
@@ -158,6 +159,11 @@ app.get('/api/instagram', passportConf.isAuthenticated, passportConf.isAuthorize
 app.get('/api/yahoo', apiController.getYahoo);
 
 /**
+ * Voting Examples
+ */
+app.get('/vote/color/:color', passportConf.isAuthenticated, voteController.postVoteColor)
+
+/**
  * OAuth sign-in routes.
  */
 
@@ -224,7 +230,13 @@ var User = require('./models/User');
 users = User.find()
 //  new Leaderboard('name', [options], [redisOptions|redisClient])
 
+runElection = function() {
 
+  io.emit('greet', { hello: 'Election has been held' });
+
+}
+  
+setInterval(runElection, 60000);
 
 io.on('connection', function(socket) {
   socket.emit('greet', { hello: 'Hey there browser!' });
