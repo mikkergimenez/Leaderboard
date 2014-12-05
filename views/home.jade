@@ -1,27 +1,36 @@
 extends layout
 
 block content
-  h1 Hackathon Starter
-  p.lead A boilerplate for Node.js web applications.
+  h1 Leaderboard
+  p.lead 
+    span.countdown-timer= 60
+    | &nbsp;seconds until next award.
   hr
   .row
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
+    .col-sm-4
+      a.vote-box.red-box
+        center
+          h2 Vote Red
+    .col-sm-4
+      a.vote-box.blue-box
+        center
+          h2 Vote Blue
+      
+    .col-sm-4
+      a.vote-box.green-box
+        center
+          h2 Vote Green
+  .row
+    .col-xs-12
+      table.table
+        thead
+          tr
+            th= "Position"
+            th= "Player"
+            th= "Points"
+        tbody
+          //each player in users
+          //  tr
+          //    td= player.position
+          //    td= player.name
+          //    td= player.points
