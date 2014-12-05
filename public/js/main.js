@@ -9,7 +9,13 @@ $(document).ready(function() {
 
   $('.vote-box').on('click', function() {
     $('.vote-box').removeClass('selected');
+    color = $( this ).data('color');
+    url = '/vote/color/' + color,
+    console.log(url)
     $( this ).addClass('selected');
+    $.post(url, function() {
+      console.log('Voted ' + color);
+    });
   });
 
   subtractOne = function() {

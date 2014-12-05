@@ -2,13 +2,16 @@
  * GET /
  * Home page.
  */
-var User = require('models/User');
+var User = require('../models/User');
     
 exports.index = function(req, res) {
-  res.render('home', {
-    title: 'Home',
-    players: {},
-    //users: {}
-    users: User.all()
+  User.find(function(err, users) {
+    console.log(users);
+    res.render('home', {
+        title: 'Home',
+        players: {},
+        //users: {}
+        users: users
+    });  
   });
 };

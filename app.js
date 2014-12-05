@@ -220,8 +220,8 @@ server.listen(app.get('port'), function() {
 module.exports = app;
 
 var Leaderboard = require('leaderboard');
-var User = require('models/User');
-users = User.all()
+var User = require('./models/User');
+users = User.find()
 //  new Leaderboard('name', [options], [redisOptions|redisClient])
 
 

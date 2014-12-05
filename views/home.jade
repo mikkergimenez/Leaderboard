@@ -8,16 +8,16 @@ block content
   hr
   .row
     .col-sm-4
-      a.vote-box.red-box
+      a.vote-box.red-box(data-color="red")
         center
           h2 Vote Red
     .col-sm-4
-      a.vote-box.blue-box
+      a.vote-box.blue-box(data-color="blue")
         center
           h2 Vote Blue
       
     .col-sm-4
-      a.vote-box.green-box
+      a.vote-box.green-box(data-color="green")
         center
           h2 Vote Green
   .row
@@ -29,8 +29,8 @@ block content
             th= "Player"
             th= "Points"
         tbody
-          //each player in users
-          //  tr
-          //    td= player.position
-          //    td= player.name
-          //    td= player.points
+          each player in users
+            tr
+              td= player.email
+              td= player.username
+              td= player.points

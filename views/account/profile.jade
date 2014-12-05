@@ -11,6 +11,10 @@ block content
       .col-sm-4
         input.form-control(type='email', name='email', id='email', value='#{user.email}')
     .form-group
+      label.col-sm-2.control-label(for='username') Username
+      .col-sm-4
+        input.form-control(type='text', name='username', id='username', value='#{user.username}')
+    .form-group
       label.col-sm-2.control-label(for='name') Name
       .col-sm-4
         input.form-control(type='text', name='name', id='name', value='#{user.profile.name}')
