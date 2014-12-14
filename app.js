@@ -161,7 +161,9 @@ app.get('/api/yahoo', apiController.getYahoo);
 /**
  * Voting Examples
  */
-app.get('/vote/color/:color', passportConf.isAuthenticated, voteController.postVoteColor)
+app.post('/vote/color/:color', function(req, res, color) {
+  voteController.postVoteColor(req, res, color)
+})
 
 /**
  * OAuth sign-in routes.
@@ -225,18 +227,27 @@ server.listen(app.get('port'), function() {
 
 module.exports = app;
 
-var Leaderboard = require('leaderboard');
-var User = require('./models/User');
-users = User.find()
-//  new Leaderboard('name', [options], [redisOptions|redisClient])
+getLeaderboard = function() {
+  // var Leaderboard = require('leaderboard');
+  var User = require('./models/User');
+  console.log('Getting Users');
+  u = User.find().sort({'points': 1}).limit(10);
+
+  return u.exec(function(err, users) {
+    console.log(users);
+    return users
+  });
+  
+}
 
 runElection = function() {
-
+  console.log('Election has been Held');
   io.emit('greet', { hello: 'Election has been held' });
+  io.emit('leaderboard', { leaderboard: getLeaderboard() })
 
 }
   
-setInterval(runElection, 60000);
+setInterval(runElection, 2000);
 
 io.on('connection', function(socket) {
   socket.emit('greet', { hello: 'Hey there browser!' });

@@ -7,6 +7,7 @@ var userSchema = new mongoose.Schema({
   email: { type: String, unique: true, lowercase: true },
   voteColor: String,
   country: String,
+  points: Number,
 
   facebook: String,
   twitter: String,
@@ -27,6 +28,10 @@ var userSchema = new mongoose.Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date
 });
+
+var findOneOrCreate = require('mongoose-find-one-or-create');
+userSchema.plugin(findOneOrCreate);
+
 
 /**
  * Password hashing Mongoose middleware.

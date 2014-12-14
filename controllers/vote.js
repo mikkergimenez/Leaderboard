@@ -7,6 +7,7 @@ var User = require('../models/User');
 var secrets = require('../config/secrets');
 
 exports.postVoteColor = function(req, res, next, color) {
+    console.log("Running Post Vote Color!!");
     var color = req.params.color;
     req.assert('color', 'Cannot be blank').isIn(['red', 'green', 'blue']);
     
@@ -17,7 +18,7 @@ exports.postVoteColor = function(req, res, next, color) {
         user.save(function(err) {
             if (err) return next(err);
             req.flash('success', { msg: 'Vote information updated.' });
-            res.redirect('/');
+            console.log(user);
         });
     });
 }
