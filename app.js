@@ -1,4 +1,9 @@
 /**
+ * Constants(config())
+ */
+var HIGH_VOTE_LOSE_PERCENT = 50;
+
+/**
  * Module dependencies.
  */
 
@@ -227,6 +232,10 @@ server.listen(app.get('port'), function() {
 
 module.exports = app;
 
+bots = require('./modules/bots');
+
+bots.setUpDummyUsers();
+
 getLeaderboard = function() {
   // var Leaderboard = require('leaderboard');
   var User = require('./models/User');
@@ -238,13 +247,61 @@ getLeaderboard = function() {
     return users
   });
   
+  
+}
+
+determineWinningColor = function() {
+  u = user.find({}).select('voteColor');
+  var redVotes, blueVotes, greenVotes = 0;
+  var votes = {}
+  u.exec(function(err, userColors)) {
+    userColors.forEach(function(userColor) {
+      ['red', 'green', 'blue'].forEach(function(val) {
+        if (userColor == val) {
+          votes[userColors];
+        }
+      });
+    });
+  });
+
+  totalVotes = votes['red'] + votes['green'] + votes['blue'];
+
+  var votePercent = {}
+  ['red', 'green', 'blue'].forEach(function(val) {
+    votePercent[val] = votes[val] / totalVotes;
+  });
+
+  winning_color = 'red'
+  losing_color = 'blue'
+
+  ['red', 'green', 'blue'].forEach(function(val) {
+    if votes[val] > votes[winning_color] {
+      highest_color = val
+    }
+    if votes[va] < votes[losing_color] {
+      lowest_color = val
+    }
+  });
+
+  if (votePercent[highest_color] > HIGH_VOTE_LOSE_PERCENT) {
+    winning_color = lowest_color
+    losing_color = highest_color
+  } else {
+    winning_color = highest_color
+    losing_color = lowest_color
+  }
+  return winning_color, losing_color;
 }
 
 runElection = function() {
   console.log('Election has been Held');
-  io.emit('greet', { hello: 'Election has been held' });
-  io.emit('leaderboard', { leaderboard: getLeaderboard() })
 
+  winColor, loseColor = determineWinningColor();
+
+  io.emit('greet', { hello: 'Election has been held' });
+  io.emit('electionHeld', winColor: winColor, loseColor: loseColor, leaderboard: getLeaderboard() )
+
+  bots.runBotLogic(winColor, loseColor);
 }
   
 setInterval(runElection, 2000);
